@@ -64,52 +64,60 @@ white_figures = [king_w, queen_w, bishop_l_w, bishop_r_w, knight_l_w, knight_r_w
 
 locs = None
 
-## Gameplay
-def allocation():#todo
-    global game_mode, locs, player1, player2, turn
-    if game_mode == -1:
-        loc_rook_l_b = board[0][7]
-        loc_knight_l_b = board[1][7]
-        loc_bishop_l_b = board[2][7]
-        loc_king_b = board[3][7]
-        loc_queen_b = board[4][7]
-        loc_bishop_r_b = board[5][7]
-        loc_knight_r_b = board[6][7]
-        loc_rook_r_b = board[7][7]
-        loc_pawn1_b = board[0][6]
-        loc_pawn2_b = board[1][6]
-        loc_pawn3_b = board[2][6]
-        loc_pawn4_b = board[3][6]
-        loc_pawn5_b = board[4][6]
-        loc_pawn6_b = board[5][6]
-        loc_pawn7_b = board[6][6]
-        loc_pawn8_b = board[7][6]
-        loc_rook_l_w = board[0][0]
-        loc_knight_l_w = board[1][0]
-        loc_bishop_l_w = board[2][0]
-        loc_king_w = board[3][0]
-        loc_queen_w = board[4][0]
-        loc_bishop_r_w = board[5][0]
-        loc_knight_r_w = board[6][0]
-        loc_rook_r_w = board[7][0]
-        loc_pawn1_w = board[0][1]
-        loc_pawn2_w = board[1][1]
-        loc_pawn3_w = board[2][1]
-        loc_pawn4_w = board[3][1]
-        loc_pawn5_w = board[4][1]
-        loc_pawn6_w = board[5][1]
-        loc_pawn7_w = board[6][1]
-        loc_pawn8_w = board[7][1]
-        b_locs = [loc_rook_l_b, loc_knight_l_b, loc_bishop_l_b, loc_king_b, loc_queen_b, loc_bishop_r_b, loc_knight_r_b, loc_rook_r_b, \
-                loc_pawn1_b, loc_pawn2_b, loc_pawn3_b, loc_pawn4_b, loc_pawn5_b, loc_pawn6_b, loc_pawn7_b, loc_pawn8_b]
-        w_locs = [loc_rook_l_w, loc_knight_l_w, loc_bishop_l_w, loc_king_w, loc_queen_w, loc_bishop_r_w, loc_knight_r_w, loc_rook_r_w, \
-                loc_pawn1_w, loc_pawn2_w, loc_pawn3_w, loc_pawn4_w, loc_pawn5_w, loc_pawn6_w, loc_pawn7_w, loc_pawn8_w]
-        locs = b_locs + w_locs
-        player1 = w_locs
-        player2 = b_locs
-        turn = player1
-        game_mode = 0
+grid = [[row, col] for row in range(1, 9) for col in range(1, 9)]
+    
+    
+    
+    
+loc_rook_l_b = [1, 1]
+loc_knight_l_b = [2, 1]
+loc_bishop_l_b = [3, 1]
+loc_king_b = [4, 1]
+loc_queen_b = [5, 1]
+loc_bishop_r_b = [6, 1]
+loc_knight_r_b = [7, 1]
+loc_rook_r_b = [8, 1]
+loc_pawn1_b = [1, 2]
+loc_pawn2_b = [2, 2]
+loc_pawn3_b = [3, 2]
+loc_pawn4_b = [4, 2]
+loc_pawn5_b = [5, 2]
+loc_pawn6_b = [6, 2]
+loc_pawn7_b = [7, 2]
+loc_pawn8_b = [8, 2]
+loc_rook_l_w = [1, 7]
+loc_knight_l_w = [2, 7]
+loc_bishop_l_w = [3, 7]
+loc_king_w = [4, 7]
+loc_queen_w = [5, 7]
+loc_bishop_r_w = [6, 7]
+loc_knight_r_w = [7, 7]
+loc_rook_r_w = [8, 7]
+loc_pawn1_w = [1, 8]
+loc_pawn2_w = [2, 8]
+loc_pawn3_w = [3, 8]
+loc_pawn4_w = [4, 8]
+loc_pawn5_w = [5, 8]
+loc_pawn6_w = [6, 8]
+loc_pawn7_w = [7, 8]
+loc_pawn8_w = [8, 8]
 
+
+    
+b_locs = [loc_rook_l_b, loc_knight_l_b, loc_bishop_l_b, loc_king_b, loc_queen_b, loc_bishop_r_b, loc_knight_r_b, loc_rook_r_b,
+          loc_pawn1_b, loc_pawn2_b, loc_pawn3_b, loc_pawn4_b, loc_pawn5_b, loc_pawn6_b, loc_pawn7_b, loc_pawn8_b]
+w_locs = [loc_rook_l_w, loc_knight_l_w, loc_bishop_l_w, loc_king_w, loc_queen_w, loc_bishop_r_w, loc_knight_r_w, loc_rook_r_w,
+          loc_pawn1_w, loc_pawn2_w, loc_pawn3_w, loc_pawn4_w, loc_pawn5_w, loc_pawn6_w, loc_pawn7_w, loc_pawn8_w]
+
+locs = b_locs + w_locs
+
+
+
+player1 = w_locs
+player2 = b_locs
+turn = player1
+
+## Gameplay
 def draw_black_figures():
     for figure in black_figures:
         figure.draw()
@@ -122,18 +130,20 @@ def draw_chessboard():
     global square_color
     for row in range(rows):
         for col in range(cols):
-            square_color = "white" if (row + col) % 2 == 0 else "purple"
-            screen.draw.filled_rect(board[row][col], square_color)
-            detect_coll()
+            square_color = "white" if (row + col) % 2 == 0 else "purple" #setting color for each field
+            screen.draw.filled_rect(board[row][col], square_color) #draw field with corresponding color
+            detectMouseOnBoard()
             keep_field()
 
-def detect_coll():
+def detectMouseOnBoard():
     global square_color
     for row in range(rows):
         for col in range(cols):
             if cursor_rect.colliderect(board[row][col]):
                 collided_field = board[row][col]
-                square_color = "white" if (row + col) % 2 == 0 else "purple"
+                #print(square_color, (row + col / 2))
+                #square_color = "white" if (row + col) % 2 == 0 else "purple"
+                #print(square_color)
                 square_color = "grey" if square_color == "white" else (135, 0, 135) if square_color == "purple" else square_color
                 screen.draw.filled_rect(collided_field, square_color)
 
@@ -165,14 +175,25 @@ def on_mouse_down(pos):
     if cursor_rect.left >= rand and cursor_rect.right <= WIDTH-rand and cursor_rect.top >= rand and cursor_rect.bottom <= HEIGHT-rand:
         for loc in turn:
             if cursor_rect.colliderect(loc):
-                chosen_field = loc
-                game_mode = 1
+                if game_mode == 0:
+                    chosen_field = loc            
+                    game_mode = 1
+        if game_mode == 2:
+            for field in board:
+                print(chosen_field)
+
+                if field == chosen_field:
+                    
+                    print("1")
+
+
+                    
         
 def draw():
     screen.clear()
     draw_chessboard()
     draw_black_figures()
     draw_white_figures()
-    allocation()
+    #allocation()
     
 pgzrun.go()
