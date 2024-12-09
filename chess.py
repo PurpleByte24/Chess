@@ -12,24 +12,24 @@ class WHITE:
     def __init__(self):
         self.chosenField = None
         self.mode = None
-        self.locRook1 = [1, 7, "r"]
-        self.locKnight1 = [2, 7, "kn"]
-        self.locBishop1 = [3, 7, "b"]
-        self.locKing = [4, 7, "ki"]
-        self.locQueen = [5, 7, "q"]
-        self.locBishop2 = [6, 7, "b"]
-        self.locKnight2 = [7, 7, "kn"]
-        self.locRook2 = [8, 7, "r"]
-        self.locPawn1 = [1, 8, "p"]
-        self.locPawn2 = [2, 8, "p"]
-        self.locPawn3 = [3, 8, "p"]
-        self.locPawn4 = [4, 8, "p"]
-        self.locPawn5 = [5, 8, "p"]
-        self.locPawn6 = [6, 8, "p"]
-        self.locPawn7 = [7, 8, "p"]
-        self.locPawn8 = [8, 8, "p"]
-        self.locs = [self.locRook1, self.locKnight1, self.locBishop1, self.locKing, self.locQueen, self.locBishop2, self.locKnight2, self.locRook2,
-                     self.locPawn1, self.locPawn2, self.locPawn3, self.locPawn4, self.locPawn5, self.locPawn6, self.locPawn7, self.locPawn8]
+        self.locRook1 = [1, 8, "r"]
+        self.locKnight1 = [2, 8, "kn"]
+        self.locBishop1 = [3, 8, "b"]
+        self.locKing = [4, 8, "ki"]
+        self.locQueen = [5, 8, "q"]
+        self.locBishop2 = [6, 8, "b"]
+        self.locKnight2 = [7, 8, "kn"]
+        self.locRook2 = [8, 8, "r"]
+        self.locPawn1 = [1, 7, "p"]
+        self.locPawn2 = [2, 7, "p"]
+        self.locPawn3 = [3, 7, "p"]
+        self.locPawn4 = [4, 7, "p"]
+        self.locPawn5 = [5, 7, "p"]
+        self.locPawn6 = [6, 7, "p"]
+        self.locPawn7 = [7, 7, "p"]
+        self.locPawn8 = [8, 7, "p"]
+        self.locs = [self.locPawn1, self.locPawn2, self.locPawn3, self.locPawn4, self.locPawn5, self.locPawn6, self.locPawn7, self.locPawn8,
+                     self.locRook1, self.locKnight1, self.locBishop1, self.locKing, self.locQueen, self.locBishop2, self.locKnight2, self.locRook2]
         
         self.pawn1HasMoved = False
         self.pawn2HasMoved = False
@@ -47,28 +47,32 @@ class WHITE:
         
         
     def getLocs(self):
-        self.locs = [self.locRook1, self.locKnight1, self.locBishop1, self.locKing, self.locQueen, self.locBishop2, self.locKnight2, self.locRook2,
-                     self.locPawn1, self.locPawn2, self.locPawn3, self.locPawn4, self.locPawn5, self.locPawn6, self.locPawn7, self.locPawn8]
+        self.locs = [self.locPawn1, self.locPawn2, self.locPawn3, self.locPawn4, self.locPawn5, self.locPawn6, self.locPawn7, self.locPawn8,
+                     self.locRook1, self.locKnight1, self.locBishop1, self.locKing, self.locQueen, self.locBishop2, self.locKnight2, self.locRook2]
+        
         self.allPawnsHasMoved = [self.pawn1HasMoved, self.pawn2HasMoved, self.pawn3HasMoved, self.pawn4HasMoved,
                                  self.pawn5HasMoved, self.pawn6HasMoved, self.pawn7HasMoved, self.pawn8HasMoved]
         return self.locs
     
-    def moveRook(self, locs):        
-        if field1[0] == field2[0]: #check if the clicked fields have the same x coords
-            for loc in locs:
-                if loc[0] == field1[0]: 
-                    if min(field1[1], field2[1]) < loc[1] < max(field1[1], field2[1]): #check if any figures are between the clicked fields
-                        pass
-                    else:
-                        self.moveFigureVisually()
-                    
-        if field1[1] == field2[1]: #check if the clicked fields have the same y coords
-            for loc in locs:
-                if loc[1] == field1[1]:
-                    if min(field1[0], field2[0]) < loc[0] < max(field1[0], field2[0]):
-                        pass
-                    else:                        
-                        self.moveFigureVisually()
+    def moveRook(self, locs):
+        self.mode = 2
+        goingFurther = self.locateField(False) #check if second field has a white figure
+        if goingFurther:
+            if field1[0] == field2[0]: #check if the clicked fields have the same x coords
+                for loc in locs:
+                    if loc[0] == field1[0]: 
+                        if min(field1[1], field2[1]) < loc[1] < max(field1[1], field2[1]): #check if any figures are between the clicked fields
+                            pass
+                        else:
+                            self.moveFigureVisually()
+                        
+            if field1[1] == field2[1]: #check if the clicked fields have the same y coords
+                for loc in locs:
+                    if loc[1] == field1[1]:
+                        if min(field1[0], field2[0]) < loc[0] < max(field1[0], field2[0]):
+                            pass
+                        else:                        
+                            self.moveFigureVisually()
                 
 
     def moveKnight(self, deltaX, deltaY):
@@ -83,35 +87,32 @@ class WHITE:
     def moveQueen(self, deltaX, deltaY):
         print("queen")
 
-    def movePawn(self, locs, index):
-        pawnHasMoved = self.allPawnsHasMoved[index]
-        goingFurther = True 
-        for loc in locs:
-            if field2 == loc:
-                goingFurther = False
-                break                 
-        if goingFurther:
-            if field1[0] == field2[0]:
+    def movePawn(self, locs, index): #todo ADD DIAGONAL KILL
+        self.mode = 2
+        pawnHasMoved = self.allPawnsHasMoved[index]        
+        if field1[0] == field2[0]:
+            goingFurther = self.locateField(False) #check if second field has a white figure
+            if goingFurther:
                 if not pawnHasMoved:
                     self.allPawnsHasMoved[index] = True 
                     if field1[1] == field2[1]+2:
-                        self.moveFigureVisually()
+                        return True 
                 if field1[1] == field2[1]+1:
-                        self.moveFigureVisually()
-            else:
-                pass
+                    return True
+        else:
+            print('Not done yet')
     
-    def moveFigureVisually(self): #todo
-        print("would move but wasnt build")
+    def moveFigureVisually(self): #todo MOVE FIGURE VISUALLY
+        print("...")
     
-    def locateField(self): #check if field has a figure on it
+    def locateField(self, canMoveOnWhite): #check if field has a figure on it
         if self.mode == 1:
             for index, loc in enumerate(self.locs):
                 if self.chosenField[0] == loc[0] and self.chosenField[1] == loc[1]:
                     return True, index                
             return False, None #only happens if 'return' on upper line was not executed
         
-        elif self.mode == 2:
+        elif self.mode == 2 and not canMoveOnWhite:
             for loc in self.locs:
                 if self.chosenField[0] == loc[0] and self.chosenField[1] == loc[1]:
                     return False                
@@ -121,15 +122,11 @@ class WHITE:
         self.chosenField = field
         self.mode = mode
         if self.mode == 1:
-            goingFurther, index = self.locateField()
+            goingFurther, index = self.locateField(None)
             if goingFurther:
                 return 2, index #return index for comparison of fields later on
             else:
                 return 1, None
-            
-        elif self.mode == 2:
-            goingFurther = self.locateField()
-            return goingFurther
         
 class BLACK:
     def __init__(self):
@@ -243,8 +240,8 @@ pawn6_W = Actor("pawn_w.png", pos=(edge+5*field_length+field_length/2, HEIGHT-ed
 pawn7_W = Actor("pawn_w.png", pos=(edge+6*field_length+field_length/2, HEIGHT-edge-field_length*1.5))
 pawn8_W = Actor("pawn_w.png", pos=(edge+7*field_length+field_length/2, HEIGHT-edge-field_length*1.5))
 
-whiteFigures = [king_W, queen_W, bishop_WL, bishop_WR, knight_WL, knight_WR, rook_WL, rook_WR,
-                 pawn1_W, pawn2_W, pawn3_W, pawn4_W, pawn5_W, pawn6_W, pawn7_W, pawn8_W]
+whiteFigures = [pawn1_W, pawn2_W, pawn3_W, pawn4_W, pawn5_W, pawn6_W, pawn7_W, pawn8_W,
+                rook_WL, knight_WL, bishop_WL, king_W, queen_W, bishop_WR, knight_WR, rook_WR]
 
 
 rook_BL = Actor("rook_b.png", pos=(edge+0*field_length+field_length/2, edge+field_length/2))
@@ -300,9 +297,8 @@ def callFigureFunc(index):
     else: #todo NEEDS TO BE CHANGED TO THE RIGHT GAMEMODE
         player = player2
         
-    #print(field1, field2)
-    deltaX = field1[0] - field2[0]
-    deltaY = field1[1] - field2[1]
+    deltaX = field2[0] - field1[0]
+    deltaY = field2[1] - field1[1]
     
     whiteFigLocs, blackFigLocs = player1.getLocs(), player2.getLocs()
     currentLocs = blackFigLocs + whiteFigLocs
@@ -310,8 +306,7 @@ def callFigureFunc(index):
     for loc in currentLocs:
         loc = loc[:-1]
         editedLocs.append(loc)
-    currentLocs = editedLocs #all locations wihtout the reference string    
-
+    currentLocs = editedLocs #all locations without the reference string    
 
     if index == 8 or index == 15:
         player.moveRook(currentLocs)
@@ -324,7 +319,12 @@ def callFigureFunc(index):
     elif index == 12:
         player.moveQueen(deltaX, deltaY, currentLocs)
     elif index <= 7:
-        player.movePawn(currentLocs, index) #give index for 'HasMoved' list
+        greenLightForVisualization = player.movePawn(currentLocs, index) #give index for 'HasMoved' list
+    
+    if greenLightForVisualization:
+        if player == player1:
+            whiteFigures[index].pos = (whiteFigures[index].pos[0] + deltaX*field_length, whiteFigures[index].pos[1] + deltaY*field_length)
+
         
 def on_key_down(key):
     if key == keys.ESCAPE:
@@ -335,7 +335,7 @@ def on_mouse_move(pos):
     x, y = pos
     cursor_rect = Rect((x, y), (1, 1))
     
-def on_mouse_down(pos): #todo
+def on_mouse_down(pos):
     global gamemode, field1, field2, whiteFigToMoveInd, blackFigThatDiesInd
     for row in range(rows):
         for col in range(cols):            
@@ -345,21 +345,11 @@ def on_mouse_down(pos): #todo
                     field1 = chosenField
                     gamemode, whiteFigToMoveInd = player1.classController(chosenField, 1)                    
                     print(f"whiteFigToMoveInd: {whiteFigToMoveInd}")
-                    
                 elif gamemode == 2: #white choses field to move figure
+                    player1.classController(chosenField, 2)
                     field2 = chosenField
-                    goingFurther = player1.classController(chosenField, 2) #white figure cant move onto white figure
-                    if goingFurther:
-                        goingFurther1, blackFigThatDiesInd = player2.classController(chosenField, 2) #check for black figures
-                        if goingFurther1:
-                            callFigureFunc(whiteFigToMoveInd)
-                        else:
-                            gamemode = 1
-                    else:
-                        gamemode = 1
-                    
-                    
-                    
+                    callFigureFunc(whiteFigToMoveInd)
+                                        
 def draw():
     screen.clear()
     draw_Chessboard()
